@@ -1,0 +1,1 @@
+export { PrakritiQuiz } from './PrakritiQuiz';
