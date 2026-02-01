@@ -1865,7 +1865,7 @@ max_tokens = 4096              # Per response
 context_limit = 6000           # Max characters of context
 
 # Note: If rate limited, the system automatically falls back to:
-# model = "llama-3.3-70b-versatile"
+# model = "openai/gpt-oss-120b"
 
 # Request tokens budget:
 # - Prompt: ~2000 tokens avg

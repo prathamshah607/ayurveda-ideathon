@@ -24,7 +24,7 @@ class SushrutaSamhitaRAG:
         
         self.llm = ChatGroq(
             api_key=groq_api_key,
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
             temperature=0.2,
             max_tokens=4000
         )

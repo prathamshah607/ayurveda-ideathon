@@ -1,1 +1,0 @@
-export { PrakritiQuiz } from './PrakritiQuiz';

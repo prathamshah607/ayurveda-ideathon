@@ -1,0 +1,191 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #4ade80;
+}
+
+.header p {
+  margin: 0.5rem 0 0;
+  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 3rem;
+}
+
+.hero {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.features {
+  width: 100%;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.features h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.structured-section {
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+  border-color: #4ade80;
+  box-shadow: 0 8px 30px rgba(74, 222, 128, 0.2);
+}
+
+.feature-card.coming-soon {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feature-card.coming-soon:hover {
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.feature-card h4 {
+  color: #4ade80;
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+}
+
+.feature-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* AYUSH card special styling */
+.feature-card.ayush-card:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.2);
+}
+
+.feature-card.ayush-card h4 {
+  color: #f59e0b;
+}
+
+/* Structured cards special styling */
+.feature-card.structured-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-style: dashed;
+}
+
+.feature-card.structured-card:hover {
+  border-style: solid;
+}
+
+.feature-card.structured-card h4 {
+  color: #22c55e;
+}
+
+.feature-card.structured-card.patient-card h4 {
+  color: #a855f7;
+}
+
+.feature-card.structured-card.patient-card:hover {
+  border-color: #a855f7;
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.2);
+}
+
+.feature-card.structured-card.ayush-card h4 {
+  color: #f59e0b;
+}
+
+/* Trends card special styling */
+.feature-card.structured-card.trends-card h4 {
+  color: #0ea5e9;
+}
+
+.feature-card.structured-card.trends-card:hover {
+  border-color: #0ea5e9;
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.2);
+}
+
+.footer {
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer p {
+  margin: 0;
+}

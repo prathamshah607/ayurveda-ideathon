@@ -657,7 +657,7 @@ class AyurvedaRAGEngine:
         # Main LLM for generation
         self.llm = ChatGroq(
             api_key=GROQ_API_KEY,
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
             temperature=0.1,
             max_tokens=4096
         )
@@ -911,7 +911,7 @@ CRITICAL INSTRUCTIONS
         )
         
         formulations = []
-        for f in data.get("shamana_treatment", []):
+        for f in (data.get("shamana_treatment") or []):
             formulations.append(HerbalFormulation(
                 name=f.get("name", ""),
                 sanskrit_name=f.get("sanskrit_name"),
@@ -1447,7 +1447,7 @@ CRITICAL INSTRUCTIONS
         
         # Build formulations
         aushadhi = []
-        for a in data.get("interventions", {}).get("aushadhi", []):
+        for a in ((data.get("interventions") or {}).get("aushadhi") or []):
             aushadhi.append(HerbalFormulation(
                 name=a.get("name", ""),
                 dosage=a.get("dosage"),
@@ -1829,9 +1829,9 @@ CRITICAL INSTRUCTIONS
         mental_indicators = []
         metabolic_indicators = []
         
-        symptoms = user_profile.get('current_symptoms', [])
-        dosha_symptoms = user_profile.get('current_dosha_symptoms', {})
-        lifestyle = user_profile.get('lifestyle', {})
+        symptoms = user_profile.get('current_symptoms') or []
+        dosha_symptoms = user_profile.get('current_dosha_symptoms') or {}
+        lifestyle = user_profile.get('lifestyle') or {}
         
         # Score based on reported dosha symptoms
         for dosha, symptom_list in dosha_symptoms.items():
@@ -2037,7 +2037,7 @@ CRITICAL INSTRUCTIONS
         
         # Build differential diagnosis
         differential = []
-        for diag in data.get("differential_diagnosis", []):
+        for diag in (data.get("differential_diagnosis") or []):
             try:
                 differential.append(DiagnosisCandidate(
                     disease_name=diag.get("disease_name", "Unknown"),
@@ -2414,7 +2414,7 @@ CRITICAL INSTRUCTIONS
         dosha_principles = json.dumps(self.dosha_treatments.get(primary_dosha, self.dosha_treatments['vata']), indent=2)
         
         # Get contraindications
-        contraindications = patient_profile.get('allergies', []) + patient_profile.get('contraindications', [])
+        contraindications = (patient_profile.get('allergies') or []) + (patient_profile.get('contraindications') or [])
         
         # Retrieve relevant context
         query = f"Ayurvedic treatment protocol for {diagnosis} in {vikriti.value} constitution"
@@ -2447,7 +2447,7 @@ CRITICAL INSTRUCTIONS
         
         # Build treatment phases
         phases = []
-        for phase_data in data.get("phases", []):
+        for phase_data in (data.get("phases") or []):
             phases.append(TreatmentPhase(
                 phase_name=phase_data.get("phase_name", "Treatment Phase"),
                 duration=phase_data.get("duration", "7-14 days"),
@@ -2857,7 +2857,7 @@ CRITICAL INSTRUCTIONS
                 conditions.add('children')
             
             # Add from medical history
-            for condition in patient_profile.get('medical_history', []):
+            for condition in (patient_profile.get('medical_history') or []):
                 conditions.add(condition.lower())
             
             # Check pregnancy
@@ -2904,7 +2904,7 @@ CRITICAL INSTRUCTIONS
         proposed_treatments = proposed_treatments or []
         
         # Get current medications
-        medications = patient_profile.get('current_medications', [])
+        medications = patient_profile.get('current_medications') or []
         
         # Check interactions
         interactions = self.check_interactions(proposed_treatments, medications)
@@ -2940,7 +2940,7 @@ CRITICAL INSTRUCTIONS
         
         # Build decision points
         decision_points = []
-        for dp in data.get("decision_points", []):
+        for dp in (data.get("decision_points") or []):
             decision_points.append(TreatmentDecision(
                 decision_id=AyurvedaRAGEngine.generate_query_id(dp.get("question", ""))[:8],
                 question=dp.get("question", ""),
@@ -2972,8 +2972,8 @@ CRITICAL INSTRUCTIONS
             decision_points=decision_points,
             contraindications=[c.get("treatment", "") for c in contraindications],
             interactions=all_interactions,
-            treatment_priority=[tp.get("treatment", "") for tp in data.get("treatment_priority", [])],
-            monitoring_parameters=[mp.get("parameter", "") for mp in data.get("monitoring_parameters", [])],
+            treatment_priority=[tp.get("treatment", "") for tp in (data.get("treatment_priority") or [])],
+            monitoring_parameters=[mp.get("parameter", "") for mp in (data.get("monitoring_parameters") or [])],
             referral_needed=referral.get("needed", False),
             referral_reason=referral.get("reason", "")
         )
@@ -3310,7 +3310,7 @@ CRITICAL INSTRUCTIONS
         
         # Build stages
         stages = []
-        for stage_data in data.get("stage_progression", self.kriyakala_stages):
+        for stage_data in (data.get("stage_progression") or self.kriyakala_stages):
             stages.append(DiseaseStage(
                 stage_number=stage_data.get("stage_number", stage_data.get("number", 1)),
                 stage_name=stage_data.get("stage_name", stage_data.get("name", "")),
@@ -3332,9 +3332,9 @@ CRITICAL INSTRUCTIONS
             samprapti_overview=data.get("samprapti_overview", ""),
             current_stage=current_stage_data.get("current_stage", current_stage),
             stages=stages,
-            progression_timeline=data.get("progression_timeline", {}),
-            intervention_windows=data.get("intervention_windows", []),
-            prevention_opportunities=[p.get("preventive_measures", []) for p in data.get("prevention_at_each_stage", [])],
+            progression_timeline=data.get("progression_timeline") or {},
+            intervention_windows=data.get("intervention_windows") or [],
+            prevention_opportunities=[p.get("preventive_measures", []) for p in (data.get("prevention_at_each_stage") or [])],
             prognosis_by_stage={s.stage_number: s.prognosis for s in stages}
         )
     
@@ -3503,12 +3503,12 @@ Output ONLY valid JSON.""")
         ]
         
         # Add dosha-specific queries
-        prakriti = user_data.get('known_prakriti', '')
+        prakriti = user_data.get('known_prakriti') or ''
         if prakriti:
             queries.append(f"{prakriti} prakriti characteristics diseases vulnerabilities")
         
         # Add season-specific queries
-        season = user_data.get('current_season', '')
+        season = user_data.get('current_season') or ''
         if season:
             queries.append(f"Ritucharya {season} seasonal regimen dosha aggravation")
         
@@ -3527,12 +3527,12 @@ Output ONLY valid JSON.""")
         queries = []
         
         # Query based on symptoms
-        symptoms = user_data.get('current_symptoms', [])
+        symptoms = user_data.get('current_symptoms') or []
         if symptoms:
             queries.append(f"Diseases with symptoms: {', '.join(symptoms[:5])}")
         
         # Query based on family history
-        family_history = user_data.get('family_history', [])
+        family_history = user_data.get('family_history') or []
         if family_history:
             for condition in family_history[:3]:
                 queries.append(f"{condition} Ayurvedic treatment hereditary genetic")
@@ -3555,10 +3555,10 @@ Output ONLY valid JSON.""")
             queries.append("Madhyavastha middle age Pitta disorders metabolic diseases")
         
         # Lifestyle queries
-        lifestyle = user_data.get('lifestyle', {})
-        if lifestyle.get('stress_level', '').lower() in ['high', 'severe']:
+        lifestyle = user_data.get('lifestyle') or {}
+        if (lifestyle.get('stress_level') or '').lower() in ['high', 'severe']:
             queries.append("Stress anxiety Vata Pitta disorders mental health Ayurveda")
-        if lifestyle.get('sleep_quality', '').lower() in ['poor', 'bad']:
+        if (lifestyle.get('sleep_quality') or '').lower() in ['poor', 'bad']:
             queries.append("Insomnia Anidra sleep disorders Vata treatment")
         
         all_docs = {}
@@ -3575,8 +3575,8 @@ Output ONLY valid JSON.""")
         """Retrieve dosha-specific pathology information"""
         queries = []
         
-        symptoms = user_data.get('current_symptoms', [])
-        dosha_symptoms = user_data.get('current_dosha_symptoms', {})
+        symptoms = user_data.get('current_symptoms') or []
+        dosha_symptoms = user_data.get('current_dosha_symptoms') or {}
         
         # Vata indicators
         vata_signs = ['anxiety', 'insomnia', 'constipation', 'dry skin', 'bloating', 
@@ -3597,7 +3597,7 @@ Output ONLY valid JSON.""")
             queries.append("Kapha vriddhi aggravation disorders treatment Kaphaja roga")
         
         # Agni/Ama queries
-        digestion_issues = user_data.get('digestion_issues', [])
+        digestion_issues = user_data.get('digestion_issues') or []
         if digestion_issues or 'poor digestion' in [s.lower() for s in symptoms]:
             queries.append("Agni Mandagni Ama formation treatment digestive fire")
         
@@ -3676,7 +3676,7 @@ Output ONLY valid JSON.""")
         }
         
         # Adjust for symptoms
-        symptoms = user_data.get('current_symptoms', [])
+        symptoms = user_data.get('current_symptoms') or []
         symptom_penalty = len(symptoms) * 3
         scores["overall"] -= min(symptom_penalty, 25)
         
@@ -3696,20 +3696,20 @@ Output ONLY valid JSON.""")
                 scores["ojas"] -= 10
         
         # Adjust for lifestyle
-        lifestyle = user_data.get('lifestyle', {})
+        lifestyle = user_data.get('lifestyle') or {}
         
-        stress = lifestyle.get('stress_level', '').lower()
+        stress = (lifestyle.get('stress_level') or '').lower()
         if stress in ['high', 'severe', 'very high']:
             scores["overall"] -= 10
             scores["dosha_balance"] -= 15
             scores["ojas"] -= 10
         
-        sleep = lifestyle.get('sleep_quality', '').lower()
+        sleep = (lifestyle.get('sleep_quality') or '').lower()
         if sleep in ['poor', 'bad', 'irregular']:
             scores["overall"] -= 8
             scores["ojas"] -= 12
         
-        exercise = lifestyle.get('exercise', '').lower()
+        exercise = (lifestyle.get('exercise') or '').lower()
         if exercise in ['none', 'sedentary', 'low']:
             scores["overall"] -= 8
             scores["agni"] -= 10
@@ -3718,12 +3718,12 @@ Output ONLY valid JSON.""")
             scores["agni"] += 5
         
         # Adjust for digestion
-        digestion_issues = user_data.get('digestion_issues', [])
+        digestion_issues = user_data.get('digestion_issues') or []
         if digestion_issues:
             scores["agni"] -= len(digestion_issues) * 5
         
         # Adjust for elimination
-        bowel = user_data.get('bowel_regularity', '').lower()
+        bowel = (user_data.get('bowel_regularity') or '').lower()
         if bowel in ['constipated', 'irregular']:
             scores["mala_elimination"] -= 15
         
@@ -3832,21 +3832,25 @@ Output ONLY valid JSON.""")
                         data: Dict, health_scores: Dict) -> FutureTrendsResponse:
         """Build structured response from parsed data"""
         
+        # Ensure data is not None
+        if data is None:
+            data = {}
+        
         # Determine prakriti
-        prakriti_data = data.get("prakriti_analysis", {})
+        prakriti_data = data.get("prakriti_analysis") or {}
         prakriti_str = prakriti_data.get("determined_prakriti", 
-                                         user_data.get("known_prakriti", "vata"))
+                                         user_data.get("known_prakriti", "vata")) or "vata"
         try:
             prakriti = DoshaType(prakriti_str.lower())
         except ValueError:
             prakriti = DoshaType.VATA
         
         # Build vikriti analysis
-        vikriti_data = data.get("vikriti_analysis", {})
+        vikriti_data = data.get("vikriti_analysis") or {}
         vikriti = None
         if vikriti_data:
             try:
-                imbalance = vikriti_data.get("current_imbalance", "vata")
+                imbalance = vikriti_data.get("current_imbalance", "vata") or "vata"
                 # Map "multiple" to tridosha
                 if imbalance == "multiple":
                     imbalance = "tridosha"
@@ -3854,30 +3858,33 @@ Output ONLY valid JSON.""")
                 vikriti = DoshaAnalysis(
                     primary_dosha=DoshaType(imbalance.lower()),
                     state=DoshaState.AGGRAVATED,
-                    vikriti_description=vikriti_data.get("vikriti_description", "")
+                    vikriti_description=vikriti_data.get("vikriti_description", "") or ""
                 )
-            except ValueError:
+            except (ValueError, AttributeError):
                 pass
         
         # Build risk factors from disease predictions
         risk_factors = []
-        for pred in data.get("disease_risk_predictions", []):
+        disease_predictions = data.get("disease_risk_predictions") or []
+        for pred in disease_predictions:
+            if not pred:
+                continue
             risk_factors.append(RiskFactor(
-                risk_name=pred.get("disease_name", "Unknown"),
+                risk_name=pred.get("disease_name", "Unknown") or "Unknown",
                 category="disease_risk",
-                current_severity=pred.get("risk_level", "low"),
-                probability_6_months=pred.get("probability_6_months", 0.0),
-                probability_1_year=pred.get("probability_1_year", 0.0),
-                probability_5_years=pred.get("probability_5_years", 0.0),
-                contributing_factors=pred.get("risk_factors_present", []),
-                preventive_measures=pred.get("preventive_herbs", []) + 
-                                    pred.get("dietary_prevention", []) +
-                                    pred.get("lifestyle_prevention", []),
-                early_warning_signs=pred.get("early_warning_signs", [])
+                current_severity=pred.get("risk_level", "low") or "low",
+                probability_6_months=pred.get("probability_6_months", 0.0) or 0.0,
+                probability_1_year=pred.get("probability_1_year", 0.0) or 0.0,
+                probability_5_years=pred.get("probability_5_years", 0.0) or 0.0,
+                contributing_factors=pred.get("risk_factors_present") or [],
+                preventive_measures=(pred.get("preventive_herbs") or []) + 
+                                    (pred.get("dietary_prevention") or []) +
+                                    (pred.get("lifestyle_prevention") or []),
+                early_warning_signs=pred.get("early_warning_signs") or []
             ))
         
         # Add dosha imbalance as risk factor if present
-        dosha_trajectory = data.get("dosha_imbalance_trajectory", {})
+        dosha_trajectory = data.get("dosha_imbalance_trajectory") or {}
         if dosha_trajectory.get("current_state"):
             risk_factors.append(RiskFactor(
                 risk_name="Dosha Imbalance Progression",
@@ -3886,26 +3893,28 @@ Output ONLY valid JSON.""")
                 probability_6_months=0.6 if vikriti else 0.3,
                 probability_1_year=0.75 if vikriti else 0.4,
                 probability_5_years=0.9 if vikriti else 0.5,
-                contributing_factors=[dosha_trajectory.get("current_state", "")],
-                preventive_measures=[dosha_trajectory.get("correction_path", "")],
+                contributing_factors=[dosha_trajectory.get("current_state", "") or ""],
+                preventive_measures=[dosha_trajectory.get("correction_path", "") or ""],
                 early_warning_signs=[
-                    dosha_trajectory.get("if_uncorrected_6_months", "")
+                    dosha_trajectory.get("if_uncorrected_6_months", "") or ""
                 ]
             ))
         
         # Build rasayanas
         rasayanas = []
-        herbal_protocol = data.get("corrective_measures", {}).get("herbal_protocol", {})
-        for r in herbal_protocol.get("rasayanas", []):
-            rasayanas.append(HerbalFormulation(
-                name=r.get("name", ""),
-                dosage=r.get("dosage"),
-                timing=r.get("timing"),
-                duration=r.get("duration")
-            ))
+        corrective_measures = data.get("corrective_measures") or {}
+        herbal_protocol = corrective_measures.get("herbal_protocol") or {}
+        for r in (herbal_protocol.get("rasayanas") or []):
+            if r:  # Ensure r is not None
+                rasayanas.append(HerbalFormulation(
+                    name=r.get("name", "") or "",
+                    dosage=r.get("dosage"),
+                    timing=r.get("timing"),
+                    duration=r.get("duration")
+                ))
         
         # Build seasonal vulnerabilities
-        seasonal_data = data.get("seasonal_calendar", {})
+        seasonal_data = data.get("seasonal_calendar") or {}
         seasonal_vulnerabilities = {}
         for season, info in seasonal_data.items():
             if isinstance(info, dict):
@@ -3914,34 +3923,35 @@ Output ONLY valid JSON.""")
                 seasonal_vulnerabilities[season] = info
         
         # Build prevention plan
-        prevention_plan = data.get("prevention_priority_plan", {})
+        prevention_plan = data.get("prevention_priority_plan") or {}
         
         # Build optimal routine
-        lifestyle = data.get("corrective_measures", {}).get("immediate_lifestyle", {})
+        corrective_measures_lifestyle = data.get("corrective_measures") or {}
+        lifestyle = corrective_measures_lifestyle.get("immediate_lifestyle") or {}
         optimal_routine = {
-            "wake_time": lifestyle.get("wake_time", "6:00 AM"),
-            "sleep_time": lifestyle.get("sleep_time", "10:00 PM"),
+            "wake_time": lifestyle.get("wake_time", "6:00 AM") or "6:00 AM",
+            "sleep_time": lifestyle.get("sleep_time", "10:00 PM") or "10:00 PM",
             "meal_times": "Breakfast 7-8 AM, Lunch 12-1 PM, Dinner 6-7 PM",
-            "exercise_time": lifestyle.get("exercise_timing", "Morning"),
+            "exercise_time": lifestyle.get("exercise_timing", "Morning") or "Morning",
             "meditation_time": "Early morning or evening"
         }
         
         # Use calculated health scores, override with LLM if available
-        llm_scores = data.get("health_scores", {})
+        llm_scores = data.get("health_scores") or {}
         final_scores = {
-            "overall": llm_scores.get("overall", health_scores["overall"]),
-            "dosha_balance": llm_scores.get("dosha_balance", health_scores["dosha_balance"]),
-            "agni": llm_scores.get("agni", health_scores["agni"]),
-            "ojas": llm_scores.get("ojas", health_scores["ojas"])
+            "overall": llm_scores.get("overall") or health_scores.get("overall", 70),
+            "dosha_balance": llm_scores.get("dosha_balance") or health_scores.get("dosha_balance", 70),
+            "agni": llm_scores.get("agni") or health_scores.get("agni", 70),
+            "ojas": llm_scores.get("ojas") or health_scores.get("ojas", 70)
         }
         
         # Age-related risks
-        age_risks = data.get("age_stage_analysis", {})
+        age_risks = data.get("age_stage_analysis") or {}
         age_related_risks = [{
-            "current_stage": age_risks.get("current_stage", "madhya"),
-            "dominant_dosha": age_risks.get("dominant_dosha_for_age", "pitta"),
-            "current_risks": age_risks.get("current_risks_for_age", []),
-            "next_decade_risks": age_risks.get("next_decade_risks", [])
+            "current_stage": age_risks.get("current_stage", "madhya") or "madhya",
+            "dominant_dosha": age_risks.get("dominant_dosha_for_age", "pitta") or "pitta",
+            "current_risks": age_risks.get("current_risks_for_age") or [],
+            "next_decade_risks": age_risks.get("next_decade_risks") or []
         }]
         
         return FutureTrendsResponse(

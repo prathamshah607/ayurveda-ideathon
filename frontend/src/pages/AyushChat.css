@@ -1,0 +1,201 @@
+/* AYUSH Chat Theme - Saffron/Orange inspired by AYUSH Ministry colors */
+
+.ayush-chat {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b1b 50%, #1a2e1a 100%);
+}
+
+.ayush-chat .header-content h1 {
+  color: #f59e0b;
+}
+
+.ayush-chat .message.user .message-content {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.ayush-chat .input-form input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.ayush-chat .input-form button {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.ayush-chat .input-form button:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Welcome section */
+.ayush-welcome h2 {
+  color: #f59e0b;
+}
+
+.ayush-welcome li::before {
+  color: #f59e0b;
+}
+
+/* Framework overview grid */
+.framework-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.framework-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.framework-item:hover {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.framework-item .fw-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.framework-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.framework-item strong {
+  color: #f59e0b;
+  font-size: 0.95rem;
+}
+
+.framework-item span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+/* Section headers with icons */
+.ayush-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.ayush-section-header:first-child {
+  margin-top: 0;
+}
+
+.ayush-section-header .section-icon {
+  font-size: 1.1em;
+}
+
+.ayush-section-header.h2 {
+  color: #f59e0b;
+  font-size: 1.3rem;
+  border-bottom-width: 2px;
+}
+
+.ayush-section-header.h3 {
+  color: #fbbf24;
+  font-size: 1.15rem;
+}
+
+.ayush-section-header.h4 {
+  color: #fcd34d;
+  font-size: 1.05rem;
+}
+
+.ayush-section-header.h5 {
+  color: #fde68a;
+  font-size: 0.95rem;
+  border-bottom: none;
+}
+
+/* AYUSH response styling */
+.ayush-response {
+  font-size: 0.95rem;
+}
+
+.ayush-response strong {
+  color: #f59e0b;
+}
+
+.ayush-response em {
+  color: #fcd34d;
+}
+
+/* Framework term highlighting */
+.ayush-response .framework-term {
+  background: rgba(245, 158, 11, 0.15);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+/* Table styling for AYUSH */
+.ayush-chat .table-wrapper {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.ayush-chat .message-content th {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-bottom-color: rgba(245, 158, 11, 0.3);
+}
+
+.ayush-chat .message-content tr:hover td {
+  background: rgba(245, 158, 11, 0.05);
+}
+
+/* Loading state */
+.ayush-loading span {
+  background: #f59e0b;
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Dosha-specific colors when mentioned */
+.dosha-vata {
+  color: #60a5fa; /* Blue for Air/Space */
+}
+
+.dosha-pitta {
+  color: #f87171; /* Red for Fire */
+}
+
+.dosha-kapha {
+  color: #34d399; /* Green for Earth/Water */
+}
+
+/* Element indicators */
+.element-akasha { color: #c4b5fd; } /* Violet - Space */
+.element-vayu { color: #93c5fd; }   /* Light Blue - Air */
+.element-agni { color: #fca5a5; }   /* Light Red - Fire */
+.element-jala { color: #5eead4; }   /* Teal - Water */
+.element-prithvi { color: #a3e635; } /* Lime - Earth */
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .framework-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .ayush-section-header {
+    font-size: 0.9rem;
+  }
+}

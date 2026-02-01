@@ -1,0 +1,1011 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   STRUCTURED OUTPUT COMPONENTS - Tabular Display for Clinical Data
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.structured-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Header */
+.structured-header {
+  background: linear-gradient(135deg, #2d5a3d 0%, #1a3a25 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.structured-header.patient-theme {
+  background: linear-gradient(135deg, #6b46c1 0%, #4c1d95 100%);
+}
+
+.structured-header.ayush-theme {
+  background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+}
+
+.structured-header .back-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.structured-header .back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.structured-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.structured-header .badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Main Content Area */
+.structured-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Query Input Section */
+.query-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.query-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.query-form {
+  display: flex;
+  gap: 1rem;
+}
+
+.query-form input {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.query-form input:focus {
+  outline: none;
+  border-color: #2d5a3d;
+  box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.patient-theme .query-form input:focus {
+  border-color: #6b46c1;
+  box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.1);
+}
+
+.ayush-theme .query-form input:focus {
+  border-color: #b45309;
+  box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.1);
+}
+
+.query-form button {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #2d5a3d 0%, #1a3a25 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.query-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3);
+}
+
+.query-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.patient-theme .query-form button {
+  background: linear-gradient(135deg, #6b46c1 0%, #4c1d95 100%);
+}
+
+.patient-theme .query-form button:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+}
+
+.ayush-theme .query-form button {
+  background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+}
+
+.ayush-theme .query-form button:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1.5rem;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #2d5a3d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.patient-theme .loading-spinner {
+  border-top-color: #6b46c1;
+}
+
+.ayush-theme .loading-spinner {
+  border-top-color: #b45309;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Results Container */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Section Cards */
+.section-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-header .section-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2d5a3d 0%, #1a3a25 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.patient-theme .section-header .section-icon {
+  background: linear-gradient(135deg, #6b46c1 0%, #4c1d95 100%);
+}
+
+.ayush-theme .section-header .section-icon {
+  background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.section-content {
+  padding: 1.5rem;
+}
+
+/* Data Tables */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.data-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background: #fafafa;
+}
+
+/* Key-Value Pairs */
+.kv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.kv-item {
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #2d5a3d;
+}
+
+.patient-theme .kv-item {
+  border-left-color: #6b46c1;
+}
+
+.ayush-theme .kv-item {
+  border-left-color: #b45309;
+}
+
+.kv-item .key {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.kv-item .value {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-badge.positive {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.negative {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge.neutral {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* Tags */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: #e5e7eb;
+  color: #374151;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.tag.recommended {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.tag.avoid {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.tag.dosha {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.tag.dhatu {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.mini-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.mini-card h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mini-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mini-card ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #6b7280;
+}
+
+.mini-card li {
+  margin-bottom: 0.25rem;
+}
+
+/* Formulation Cards */
+.formulation-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.formulation-card .name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #166534;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.formulation-card .sanskrit {
+  font-size: 0.85rem;
+  color: #15803d;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.formulation-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.formulation-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.formulation-detail .label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.formulation-detail .value {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* Reference Cards */
+.reference-card {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.reference-card .icon {
+  font-size: 1.25rem;
+}
+
+.reference-card .content {
+  flex: 1;
+}
+
+.reference-card .source {
+  font-weight: 600;
+  color: #92400e;
+}
+
+.reference-card .chapter {
+  font-size: 0.85rem;
+  color: #b45309;
+}
+
+/* Two Column Layout */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.column-card h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.column-card.do h4 {
+  border-bottom-color: #22c55e;
+}
+
+.column-card.dont h4 {
+  border-bottom-color: #ef4444;
+}
+
+.column-card ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #4b5563;
+}
+
+.column-card li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Prognosis Banner */
+.prognosis-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.prognosis-banner.sadhya {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border: 1px solid #86efac;
+}
+
+.prognosis-banner.krichra {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fcd34d;
+}
+
+.prognosis-banner.yapya {
+  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+  border: 1px solid #fb923c;
+}
+
+.prognosis-banner.asadhya {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: 1px solid #fca5a5;
+}
+
+.prognosis-banner .icon {
+  font-size: 2rem;
+}
+
+.prognosis-banner .text h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1f2937;
+}
+
+.prognosis-banner .text p {
+  margin: 0.25rem 0 0 0;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* Metadata Footer */
+.metadata-footer {
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border-radius: 12px;
+}
+
+.metadata-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.metadata-item .icon {
+  color: #9ca3af;
+}
+
+/* Confidence Score */
+.confidence-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.confidence-track {
+  width: 100px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.confidence-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Safety Box */
+.safety-box {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.safety-box h4 {
+  margin: 0 0 0.75rem 0;
+  color: #991b1b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.safety-box ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #7f1d1d;
+}
+
+.safety-box li {
+  margin-bottom: 0.5rem;
+}
+
+.disclaimer-box {
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Element Analysis (for AYUSH) */
+.element-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .element-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .element-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.element-card {
+  text-align: center;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+}
+
+.element-card.akasha {
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+  border-color: #c4b5fd;
+}
+
+.element-card.vayu {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #7dd3fc;
+}
+
+.element-card.agni {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fcd34d;
+}
+
+.element-card.jala {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #93c5fd;
+}
+
+.element-card.prithvi {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-color: #86efac;
+}
+
+.element-card .emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.element-card .name {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.element-card .sanskrit {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.element-card.dominant {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
+}
+
+.element-card.deficient {
+  opacity: 0.6;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #9ca3af;
+}
+
+.empty-state .icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: #6b7280;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Dosha Visualization */
+.dosha-viz {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+}
+
+.dosha-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dosha-circle.vata {
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+  color: #1e40af;
+}
+
+.dosha-circle.pitta {
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+  color: #92400e;
+}
+
+.dosha-circle.kapha {
+  background: linear-gradient(135deg, #dcfce7 0%, #86efac 100%);
+  color: #166534;
+}
+
+.dosha-info {
+  flex: 1;
+}
+
+.dosha-info h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: #1f2937;
+}
+
+.dosha-info .state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.dosha-info .state.vriddhi {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.dosha-info .state.sama {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.dosha-info .state.kshaya {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.dosha-info p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Dhatu Grid */
+.dhatu-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .dhatu-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dhatu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dhatu-item {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.dhatu-item.affected {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.dhatu-item .emoji {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.dhatu-item .name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.dhatu-item .sanskrit {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* Home Remedy Card */
+.remedy-card {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.remedy-card .name {
+  font-weight: 600;
+  color: #166534;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remedy-card .how-to {
+  background: white;
+  border-radius: 8px;
+  padding: 0.875rem;
+  margin-bottom: 0.75rem;
+  color: #374151;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.remedy-card .caution {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: #b45309;
+  font-size: 0.85rem;
+}
+
+/* Tips List */
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tips-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tips-list li:last-child {
+  border-bottom: none;
+}
+
+.tips-list .bullet {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #2d5a3d 0%, #1a3a25 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.patient-theme .tips-list .bullet {
+  background: linear-gradient(135deg, #6b46c1 0%, #4c1d95 100%);
+}
+
+.tips-list .text {
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* Error State */
+.error-container {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  color: #991b1b;
+}
+
+.error-container .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.error-container h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.error-container p {
+  margin: 0;
+  color: #7f1d1d;
+}
