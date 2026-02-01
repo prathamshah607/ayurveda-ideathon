@@ -1,0 +1,27 @@
+{
+  "chief_complaint": "Joint pain and acid reflux for 2 weeks",
+  "symptom_list": [
+    "Morning stiffness",
+    "Burning sensation in stomach",
+    "Constipation",
+    "Bloating",
+    "Weakness",
+    "Poor sleep"
+  ],
+  "symptom_duration_days": 14,
+  "symptom_severity_1_10": 7,
+  "vision_analysis": {
+    "tongue_severity_score": 0.65,
+    "nail_severity_score": 0.58
+  },
+  "age": 42,
+  "gender": "Male",
+  "height_cm": 175,
+  "weight_kg": 85,
+  "known_prakriti": "vata_pitta",
+  "current_season": "Winter",
+  "stress_level": "High",
+  "digestion_quality": "Poor",
+  "sleep_hours": 6.0,
+  "lifestyle_adherence": "Moderate"
+}
